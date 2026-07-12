@@ -18,7 +18,7 @@ is_page_empty is_flash_empty(select_page page)
 {
 	if(page == total_page)
 	{
-		for (uint32_t address_read = address_total; address_read<address_total+0x400;address_read+=32)
+		for (uint32_t address_read = address_total; address_read<address_total+0x400;address_read+=4)
 		{
 			uint32_t value = read_fhash_with_address(address_read);
 			if(value!= 0xFFFFFFFF) return page_not_empty;
@@ -27,7 +27,7 @@ is_page_empty is_flash_empty(select_page page)
 	}
 	else
 	{
-		for (uint32_t address_read = address_display; address_read<address_display+0x400;address_read+=32)
+		for (uint32_t address_read = address_display; address_read<address_display+0x400;address_read+=4)
 		{
 			uint32_t value = read_fhash_with_address(address_read);
 			if(value!= 0xFFFFFFFF) return page_not_empty;
@@ -41,7 +41,7 @@ uint32_t find_min_flash(select_page page)
 	if(page == total_page)
 	{
 		uint32_t value_min=0xFFFFFFFF, address = 0;
-		for (uint32_t address_find = address_total; address_find < address_total + 0x400; address_find += 32) {
+		for (uint32_t address_find = address_total; address_find < address_total + 0x400; address_find += 4) {
 			uint32_t value = read_fhash_with_address(address_find);
 			if(value == 0xFFFFFFFF) return address_find;
 			if(value_min>value)
@@ -55,7 +55,7 @@ uint32_t find_min_flash(select_page page)
 	else
 		{
 			uint32_t value_min=0xFFFFFFFF, address = 0;
-			for (uint32_t address_find = address_display; address_find < address_display + 0x400; address_find += 32) {
+			for (uint32_t address_find = address_display; address_find < address_display + 0x400; address_find += 4) {
 				uint32_t value = read_fhash_with_address(address_find);
 				if(value == 0xFFFFFFFF) return address_find;
 				if(value_min>value)
@@ -73,7 +73,7 @@ uint32_t find_max_value_flash(select_page page)
 	{
 		uint32_t value_max = 0, address = 0;
 		for (uint32_t address_find = address_total;
-				address_find < address_total + 0x400; address_find += 32)
+				address_find < address_total + 0x400; address_find += 4)
 		{
 			uint32_t value = read_fhash_with_address(address_find);
 			if (value_max < value && value != 0xFFFFFFFF)
@@ -90,7 +90,7 @@ uint32_t find_max_value_flash(select_page page)
 	{
 		uint32_t value_max = 0, address = 0;
 		for (uint32_t address_find = address_display;
-				address_find < address_display + 0x400; address_find += 32)
+				address_find < address_display + 0x400; address_find += 4)
 		{
 			uint32_t value = read_fhash_with_address(address_find);
 			if (value_max < value && value != 0xFFFFFFFF)
